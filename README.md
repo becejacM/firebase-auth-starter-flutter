@@ -21,5 +21,5 @@ This Flutter project demonstrates how to implement Firebase Authentication with 
 
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/becejacM/firebase-auth-flutter.git
+   git clone https://github.com/becejacM/firebase-auth-starter-flutter.git
    cd firebase-auth-flutter
