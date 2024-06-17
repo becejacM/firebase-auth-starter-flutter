@@ -1,4 +1,4 @@
-# firebase-auth-flutter
+# firebase-auth-starter-flutter
 # Flutter Firebase Authentication Project
 
 This Flutter project demonstrates how to implement Firebase Authentication with user login, registration, and logout functionalities. Additionally, the project saves and retrieves user details such as first name, last name, and company name.
