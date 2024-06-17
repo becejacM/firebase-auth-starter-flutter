@@ -1,14 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_login/feature/authentication/model/user_entity.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class FirebaseAuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<UserEntity?> signIn({required String email, required String password}) async {
-    final result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+  Future<UserEntity?> signIn(
+      {required String email, required String password}) async {
+    final result = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
     return await _userFromFirebaseUser(result.user);
   }
 
@@ -19,7 +22,8 @@ class FirebaseAuthService {
     required String lastName,
     required String companyName,
   }) async {
-    final result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+    final result = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
     final user = result.user;
     if (user != null) {
       await _firestore.collection('users').doc(user.uid).set({
@@ -44,9 +48,11 @@ class FirebaseAuthService {
     return await _firebaseAuth.signOut();
   }
 
-  Future<UserEntity?> get currentUser => _userFromFirebaseUser(_firebaseAuth.currentUser);
+  Future<UserEntity?> get currentUser =>
+      _userFromFirebaseUser(_firebaseAuth.currentUser);
 
-  Stream<UserEntity?> authStateChanges() => _firebaseAuth.authStateChanges().asyncMap(_userFromFirebaseUser);
+  Stream<UserEntity?> authStateChanges() =>
+      _firebaseAuth.authStateChanges().asyncMap(_userFromFirebaseUser);
 
   Future<UserEntity?> _userFromFirebaseUser(User? user) async {
     if (user == null) return null;

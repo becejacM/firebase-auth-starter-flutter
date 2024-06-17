@@ -1,13 +1,17 @@
-import 'firebase_auth_service.dart';
 import 'package:firebase_login/feature/authentication/model/user_entity.dart';
+import 'package:injectable/injectable.dart';
 
+import 'firebase_auth_service.dart';
+
+@injectable
 class AuthService {
   final FirebaseAuthService _firebaseAuthService;
 
   AuthService({required FirebaseAuthService firebaseAuthService})
       : _firebaseAuthService = firebaseAuthService;
 
-  Future<UserEntity?> signIn({required String email, required String password}) {
+  Future<UserEntity?> signIn(
+      {required String email, required String password}) {
     return _firebaseAuthService.signIn(email: email, password: password);
   }
 
@@ -33,5 +37,6 @@ class AuthService {
 
   Future<UserEntity?> get currentUser => _firebaseAuthService.currentUser;
 
-  Stream<UserEntity?> authStateChanges() => _firebaseAuthService.authStateChanges();
+  Stream<UserEntity?> authStateChanges() =>
+      _firebaseAuthService.authStateChanges();
 }
